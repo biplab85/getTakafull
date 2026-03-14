@@ -31,7 +31,6 @@ tr:hover td { background-color: #e8f4ee; }
   <th>Name</th>
   <th>Email</th>
   <th>Contact No</th>
-  <th>Group Name(s)</th>
   <th>Password</th>
   <th>Group Owner</th>
 </tr>
@@ -42,7 +41,6 @@ tr:hover td { background-color: #e8f4ee; }
   <td>Tanzilur Rahman</td>
   <td>biplab.cse.85@gmail.com</td>
   <td>—</td>
-  <td>Calgary Drivers Takaful, Community Auto Takaful, Elderly Care Fund, Family Health Takaful, Freelancer Safety Net, Home Insurance Takaful, Montreal Health Pool, Neighborhood Watch Fund, Small Business Protection, Student Emergency Fund, Tesla Car Insurance, Travel Safety Takaful, Vancouver Renters Protection, Youth Sports Takaful</td>
   <td>password123</td>
   <td class="yes">Yes</td>
 </tr>
@@ -50,7 +48,6 @@ tr:hover td { background-color: #e8f4ee; }
   <td>2</td>
   <td>Biplab Paul</td>
   <td>biplab.cse.85+1@gmail.com</td>
-  <td>—</td>
   <td>—</td>
   <td>password123</td>
   <td class="no">No</td>
@@ -60,7 +57,6 @@ tr:hover td { background-color: #e8f4ee; }
   <td>User Test1</td>
   <td>testuser1@gettakaful.com</td>
   <td>1234567891</td>
-  <td>Community Auto Takaful, Family Health Takaful, Family Insurance, Freelancer Safety Net, Home Insurance Takaful, Small Business Protection, Tesla Car Insurance, Vancouver Renters Protection, Youth Sports Takaful</td>
   <td>password123</td>
   <td class="yes">Yes</td>
 </tr>
@@ -69,7 +65,6 @@ tr:hover td { background-color: #e8f4ee; }
   <td>User Test2</td>
   <td>testuser2@gettakaful.com</td>
   <td>1234567892</td>
-  <td>Calgary Drivers Takaful, Community Auto Takaful, Family Insurance, Neighborhood Watch Fund, Small Business Protection, Tesla Car Insurance, Youth Sports Takaful</td>
   <td>password123</td>
   <td class="yes">Yes</td>
 </tr>
@@ -78,7 +73,6 @@ tr:hover td { background-color: #e8f4ee; }
   <td>User Test3</td>
   <td>testuser3@gettakaful.com</td>
   <td>1234567893</td>
-  <td>Elderly Care Fund, Family Health Takaful, Family Insurance, Home Insurance Takaful, Montreal Health Pool, Neighborhood Watch Fund, Student Emergency Fund, Tesla Car Insurance, Travel Safety Takaful</td>
   <td>password123</td>
   <td class="yes">Yes</td>
 </tr>
@@ -87,7 +81,6 @@ tr:hover td { background-color: #e8f4ee; }
   <td>User Test4</td>
   <td>testuser4@gettakaful.com</td>
   <td>1234567894</td>
-  <td>Elderly Care Fund, Family Health Takaful, Freelancer Safety Net, Home Insurance Takaful, Small Business Protection, Student Emergency Fund, Travel Safety Takaful, Youth Sports Takaful</td>
   <td>password123</td>
   <td class="no">No</td>
 </tr>
@@ -96,7 +89,6 @@ tr:hover td { background-color: #e8f4ee; }
   <td>User Test5</td>
   <td>testuser5@gettakaful.com</td>
   <td>1234567895</td>
-  <td>Community Auto Takaful, Elderly Care Fund, Family Health Takaful, Home Insurance Takaful, Travel Safety Takaful</td>
   <td>password123</td>
   <td class="no">No</td>
 </tr>
@@ -105,7 +97,6 @@ tr:hover td { background-color: #e8f4ee; }
   <td>Test Takaful</td>
   <td>yixera4386@aiwanlab.com</td>
   <td>—</td>
-  <td>Tesla Car Insurance</td>
   <td>password123</td>
   <td class="no">No</td>
 </tr>
@@ -114,7 +105,6 @@ tr:hover td { background-color: #e8f4ee; }
   <td>Rafiatun Zannat</td>
   <td>mroni78@gmail.com</td>
   <td>—</td>
-  <td>Tesla Car Insurance</td>
   <td>password123</td>
   <td class="no">No</td>
 </tr>
@@ -123,7 +113,6 @@ tr:hover td { background-color: #e8f4ee; }
   <td>Rishad Bin Wahid</td>
   <td>info@sklentr.com</td>
   <td>—</td>
-  <td>Tesla Car Insurance</td>
   <td>password123</td>
   <td class="no">No</td>
 </tr>
@@ -132,7 +121,6 @@ tr:hover td { background-color: #e8f4ee; }
   <td>GetTakaful Inc.</td>
   <td>tanzilur@sklentr.com</td>
   <td>—</td>
-  <td>Tesla Car Insurance</td>
   <td>password123</td>
   <td class="no">No</td>
 </tr>
@@ -141,7 +129,6 @@ tr:hover td { background-color: #e8f4ee; }
   <td>Sarah Ahmed</td>
   <td>sarah.ahmed@gettakaful.com</td>
   <td>4165551234</td>
-  <td>—</td>
   <td>password123</td>
   <td class="no">No</td>
 </tr>
