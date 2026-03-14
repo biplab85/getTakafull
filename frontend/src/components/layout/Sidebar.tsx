@@ -35,8 +35,8 @@ export default function Sidebar({ collapsed, onToggle, onMobileClose }: SidebarP
                 <img className="minimize-logo" src="/img/icon.png" alt="GT" />
               </div>
               <button id="header-toggle" className="sidebar-toggle-btn" onClick={onToggle}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M3 12h18M3 6h18M3 18h18" />
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ transition: 'transform 0.3s ease', transform: collapsed ? 'rotate(180deg)' : 'rotate(0deg)' }}>
+                  <polyline points="15 18 9 12 15 6" />
                 </svg>
               </button>
               <button className="mobile-sidebar-close lg:hidden" onClick={onMobileClose}>
