@@ -63,7 +63,7 @@ class GroupController extends Controller
 
     public function show(Group $group)
     {
-        $group->load(['creator:id,first_name,last_name', 'activeMembers:id,first_name,last_name']);
+        $group->load(['creator:id,first_name,last_name', 'activeMembers:id,first_name,last_name,email']);
         $group->loadCount(['activeMembers', 'claims']);
 
         return response()->json($group);

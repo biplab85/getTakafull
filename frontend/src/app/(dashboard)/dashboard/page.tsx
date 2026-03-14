@@ -9,10 +9,10 @@ import CreateGroupForm from '@/components/groups/CreateGroupForm';
 import EmptyState from '@/components/ui/EmptyState';
 
 interface DashboardStats {
-  my_groups: number;
-  joined_groups: number;
+  my_takaful_count: number;
+  total_joined_takaful: number;
   pending_claims: number;
-  total_claim_amount: number;
+  total_claim_amount: string;
 }
 
 interface PendingVote {
@@ -67,10 +67,10 @@ export default function DashboardPage() {
   }
 
   const statCards = [
-    { label: 'My Takaful', value: stats?.my_groups ?? 0, theme: 'blue' as const, icon: GroupIcon },
-    { label: 'Total Joined Takaful', value: stats?.joined_groups ?? 0, theme: 'green' as const, icon: JoinedGroupIcon },
+    { label: 'My Takaful', value: stats?.my_takaful_count ?? 0, theme: 'blue' as const, icon: GroupIcon },
+    { label: 'Total Joined Takaful', value: stats?.total_joined_takaful ?? 0, theme: 'green' as const, icon: JoinedGroupIcon },
     { label: 'Pending Claims', value: stats?.pending_claims ?? 0, theme: 'orange' as const, icon: PendingIcon },
-    { label: 'Total Claim Amount', value: `${stats?.total_claim_amount ?? 0} CAD`, theme: 'indigo' as const, icon: AmountIcon },
+    { label: 'Total Claim Amount', value: `${stats?.total_claim_amount ?? '0.00'} CAD`, theme: 'indigo' as const, icon: AmountIcon },
   ];
 
   return (

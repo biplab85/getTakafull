@@ -1,2 +1,7 @@
- - Email: tanzilur@sklentr.com
+ - Email: biplab.cse.85@gmail.com
   - Password: password123
+
+  Test credentials:
+  - Email: sarah.ahmed@gettakaful.com
+  - Password: password123
+  - Family Insurance Group: /groups/16

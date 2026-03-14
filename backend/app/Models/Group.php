@@ -59,7 +59,7 @@ class Group extends Model
     public function members()
     {
         return $this->belongsToMany(User::class, 'group_members')
-            ->withPivot('role', 'status')
+            ->withPivot('role', 'status', 'vehicle_make', 'vehicle_model', 'identification_number', 'registration_number', 'engine_size_capacity')
             ->withTimestamps();
     }
 

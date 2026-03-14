@@ -47,9 +47,15 @@ class AuthController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        if (!$user || !Hash::check($request->password, $user->password)) {
+        if (!$user) {
             throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect.'],
+                'email' => ['No account found with this email address.'],
+            ]);
+        }
+
+        if (!Hash::check($request->password, $user->password)) {
+            throw ValidationException::withMessages([
+                'password' => ['The password you entered is incorrect.'],
             ]);
         }
 
@@ -79,6 +85,13 @@ class AuthController extends Controller
             'full_name' => $user->full_name,
             'email' => $user->email,
             'phone' => $user->phone,
+            'street_address' => $user->street_address,
+            'address_line_2' => $user->address_line_2,
+            'city' => $user->city,
+            'province' => $user->province,
+            'knows_shariah_insurance' => $user->knows_shariah_insurance,
+            'insurance_experience' => $user->insurance_experience,
+            'expectation' => $user->expectation,
             'profile_picture' => $user->profile_picture_url,
             'email_verified_at' => $user->email_verified_at,
         ]);
@@ -92,6 +105,13 @@ class AuthController extends Controller
             'first_name' => 'sometimes|string|max:255',
             'last_name' => 'sometimes|string|max:255',
             'phone' => 'nullable|string|max:20',
+            'street_address' => 'nullable|string|max:255',
+            'address_line_2' => 'nullable|string|max:255',
+            'city' => 'nullable|string|max:255',
+            'province' => 'nullable|string|max:255',
+            'knows_shariah_insurance' => 'nullable|string|max:10',
+            'insurance_experience' => 'nullable|string|max:255',
+            'expectation' => 'nullable|string',
             'profile_picture' => 'nullable|image|max:2048',
         ]);
 
@@ -100,7 +120,11 @@ class AuthController extends Controller
             $user->profile_picture = $path;
         }
 
-        $user->fill($request->only(['first_name', 'last_name', 'phone']));
+        $user->fill($request->only([
+            'first_name', 'last_name', 'phone',
+            'street_address', 'address_line_2', 'city', 'province',
+            'knows_shariah_insurance', 'insurance_experience', 'expectation',
+        ]));
         $user->save();
 
         return response()->json(['user' => $user, 'message' => 'Profile updated']);

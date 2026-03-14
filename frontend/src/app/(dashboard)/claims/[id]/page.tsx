@@ -35,11 +35,17 @@ interface ClaimDetail {
   is_voting_open: boolean;
   has_voted: boolean;
   can_vote: boolean;
-  vote_stats: {
+  vote_stats?: {
     total: number;
     approved: number;
     denied: number;
   };
+  total_participants?: number;
+  approved_votes?: number;
+  denied_votes?: number;
+  group?: { id: number; title: string };
+  claimant?: { id: number; first_name: string; last_name: string; profile_picture?: string };
+  report_url?: string | null;
 }
 
 export default function ClaimDetailPage() {
@@ -58,8 +64,14 @@ export default function ClaimDetailPage() {
   const loadClaim = useCallback(async () => {
     if (!token) return;
     try {
-      const data = await claimsApi.show(token, claimId) as ClaimDetail;
-      setClaim(data);
+      const res = await claimsApi.show(token, claimId) as { claim: ClaimDetail; voting: Record<string, unknown> } | ClaimDetail;
+      // API returns { claim, voting } — extract the claim object
+      if ('claim' in res && res.claim) {
+        const merged = { ...res.claim, ...(res.voting as Record<string, unknown>) } as unknown as ClaimDetail;
+        setClaim(merged);
+      } else {
+        setClaim(res as ClaimDetail);
+      }
     } catch {
       // silent
     } finally {
@@ -94,12 +106,12 @@ export default function ClaimDetailPage() {
     return <EmptyState icon="not-found" message="Claim Not Found" subtitle="This claim may have been removed or you don't have access." />;
   }
 
-  const statusClass = claim.status.toLowerCase().replace(/\s+/g, '-');
+  const statusClass = (claim.status || 'pending').toLowerCase().replace(/\s+/g, '-');
 
   return (
     <div className="main-container-wrapper">
       <div className="flex items-center gap-3 mb-5">
-        <Link href={`/groups/${claim.group_id}`}>
+        <Link href={`/groups/${claim.group_id || claim.group?.id}`}>
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M19 12H5M12 19l-7-7 7-7" />
           </svg>
@@ -109,15 +121,15 @@ export default function ClaimDetailPage() {
 
       {/* Claimant Info */}
       <div className="claim-auth-info">
-        {claim.claimant_image && (
+        {(claim.claimant_image || claim.claimant?.profile_picture) && (
           <div className="auth-info-img">
-            <img src={claim.claimant_image} alt="claimant" />
+            <img src={claim.claimant_image || claim.claimant?.profile_picture || ''} alt="claimant" />
           </div>
         )}
         <div className="basic-info">
           <div className="group">
             <div className="data-title">Name</div>
-            <div className="data-content">{claim.claimant_name}</div>
+            <div className="data-content">{claim.claimant_name || (claim.claimant ? `${claim.claimant.first_name} ${claim.claimant.last_name}` : '-')}</div>
           </div>
           <div className="group">
             <div className="data-title">Policy Number</div>
@@ -175,9 +187,9 @@ export default function ClaimDetailPage() {
           <div className="vote-result">
             <div className="result-title">Voting Result</div>
             <ul>
-              <li><span>Total Participants: </span> {claim.vote_stats.total}</li>
-              <li><span>Approved Votes: </span> {claim.vote_stats.approved}</li>
-              <li><span>Denied Votes: </span> {claim.vote_stats.denied}</li>
+              <li><span>Total Participants: </span> {claim.vote_stats?.total ?? claim.total_participants ?? 0}</li>
+              <li><span>Approved Votes: </span> {claim.vote_stats?.approved ?? claim.approved_votes ?? 0}</li>
+              <li><span>Denied Votes: </span> {claim.vote_stats?.denied ?? claim.denied_votes ?? 0}</li>
             </ul>
           </div>
         )}
@@ -255,8 +267,8 @@ export default function ClaimDetailPage() {
           <div>
             <div className="data-title">Police Report File</div>
             <div className="data-content">
-              {claim.police_report_url && (
-                <a href={claim.police_report_url} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--brand-color)' }}>
+              {(claim.police_report_url || claim.report_url) && (
+                <a href={claim.police_report_url || claim.report_url || ''} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--brand-color)' }}>
                   Download
                 </a>
               )}

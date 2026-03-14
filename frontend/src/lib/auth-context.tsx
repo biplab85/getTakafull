@@ -11,6 +11,13 @@ interface User {
   full_name: string;
   email: string;
   phone: string | null;
+  street_address: string | null;
+  address_line_2: string | null;
+  city: string | null;
+  province: string | null;
+  knows_shariah_insurance: string | null;
+  insurance_experience: string | null;
+  expectation: string | null;
   profile_picture: string | null;
   email_verified_at: string | null;
 }
@@ -56,10 +63,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [refreshUser]);
 
   const login = async (email: string, password: string) => {
-    const res = await authApi.login({ email, password }) as { user: User; token: string };
+    const res = await authApi.login({ email, password }) as { user: User & { profile_picture_url?: string }; token: string };
     localStorage.setItem('token', res.token);
     setToken(res.token);
-    setUser(res.user);
+    // Normalize: login returns profile_picture_url (full URL) via $appends,
+    // but user() endpoint returns it as profile_picture
+    const userData = {
+      ...res.user,
+      profile_picture: res.user.profile_picture_url || res.user.profile_picture,
+    };
+    setUser(userData);
     router.push('/dashboard');
   };
 

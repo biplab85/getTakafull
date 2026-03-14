@@ -68,13 +68,13 @@ function ProfileForm() {
   const [form, setForm] = useState({
     first_name: user?.first_name || '',
     last_name: user?.last_name || '',
-    street_address: '',
-    address_line_2: '',
-    city: '',
-    province: 'Alberta',
-    knows_shariah_insurance: 'Yes',
-    insurance_experience: 'No Experience',
-    expectation: '',
+    street_address: user?.street_address || '',
+    address_line_2: user?.address_line_2 || '',
+    city: user?.city || '',
+    province: user?.province || 'Alberta',
+    knows_shariah_insurance: user?.knows_shariah_insurance || 'Yes',
+    insurance_experience: user?.insurance_experience || 'No Experience',
+    expectation: user?.expectation || '',
   });
   const [profilePicture, setProfilePicture] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
@@ -90,6 +90,13 @@ function ProfileForm() {
     const formData = new FormData();
     formData.append('first_name', form.first_name);
     formData.append('last_name', form.last_name);
+    formData.append('street_address', form.street_address);
+    formData.append('address_line_2', form.address_line_2);
+    formData.append('city', form.city);
+    formData.append('province', form.province);
+    formData.append('knows_shariah_insurance', form.knows_shariah_insurance);
+    formData.append('insurance_experience', form.insurance_experience);
+    formData.append('expectation', form.expectation);
     if (profilePicture) {
       formData.append('profile_picture', profilePicture);
     }

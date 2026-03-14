@@ -16,6 +16,13 @@ class User extends Authenticatable
         'last_name',
         'email',
         'phone',
+        'street_address',
+        'address_line_2',
+        'city',
+        'province',
+        'knows_shariah_insurance',
+        'insurance_experience',
+        'expectation',
         'password',
         'profile_picture',
         'otp_code',
@@ -26,6 +33,11 @@ class User extends Authenticatable
         'password',
         'remember_token',
         'otp_code',
+    ];
+
+    protected $appends = [
+        'full_name',
+        'profile_picture_url',
     ];
 
     protected function casts(): array

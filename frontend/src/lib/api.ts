@@ -51,8 +51,10 @@ export const authApi = {
   getUser: (token: string) =>
     apiFetch('/auth/user', { token }),
 
-  updateProfile: (token: string, data: FormData) =>
-    apiFetch('/auth/profile', { method: 'PUT', token, body: data }),
+  updateProfile: (token: string, data: FormData) => {
+    data.append('_method', 'PUT');
+    return apiFetch('/auth/profile', { method: 'POST', token, body: data });
+  },
 
   updatePassword: (token: string, data: Record<string, string>) =>
     apiFetch('/auth/password', { method: 'PUT', token, body: JSON.stringify(data) }),

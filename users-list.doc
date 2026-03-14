@@ -1,0 +1,154 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+<head>
+<meta charset="UTF-8">
+<title>GetTakaful - All Users List</title>
+<style>
+body { font-family: Calibri, Arial, sans-serif; margin: 40px; }
+h1 { font-size: 20pt; color: #1a1a1a; margin-bottom: 5px; }
+h2 { font-size: 11pt; color: #666; font-weight: normal; margin-top: 0; margin-bottom: 20px; }
+table { border-collapse: collapse; width: 100%; font-size: 10pt; }
+th { background-color: #0d6e3f; color: #ffffff; padding: 8px 10px; text-align: left; border: 1px solid #0a5832; font-weight: 600; }
+td { padding: 7px 10px; border: 1px solid #d0d0d0; vertical-align: top; }
+tr:nth-child(even) td { background-color: #f5f9f7; }
+tr:hover td { background-color: #e8f4ee; }
+.yes { color: #0d6e3f; font-weight: 600; }
+.no { color: #999; }
+.note { font-size: 9pt; color: #888; margin-top: 15px; }
+.header-row { background-color: #0d6e3f; }
+</style>
+</head>
+<body>
+
+<h1>GetTakaful — All Users List</h1>
+<h2>Generated on: March 14, 2026 &nbsp;|&nbsp; Total Users: 12</h2>
+
+<table>
+<thead>
+<tr class="header-row">
+  <th>#</th>
+  <th>Name</th>
+  <th>Email</th>
+  <th>Contact No</th>
+  <th>Group Name(s)</th>
+  <th>Password</th>
+  <th>Group Owner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>1</td>
+  <td>Tanzilur Rahman</td>
+  <td>biplab.cse.85@gmail.com</td>
+  <td>—</td>
+  <td>Calgary Drivers Takaful, Community Auto Takaful, Elderly Care Fund, Family Health Takaful, Freelancer Safety Net, Home Insurance Takaful, Montreal Health Pool, Neighborhood Watch Fund, Small Business Protection, Student Emergency Fund, Tesla Car Insurance, Travel Safety Takaful, Vancouver Renters Protection, Youth Sports Takaful</td>
+  <td>password123</td>
+  <td class="yes">Yes</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td>Biplab Paul</td>
+  <td>biplab.cse.85+1@gmail.com</td>
+  <td>—</td>
+  <td>—</td>
+  <td>password123</td>
+  <td class="no">No</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td>User Test1</td>
+  <td>testuser1@gettakaful.com</td>
+  <td>1234567891</td>
+  <td>Community Auto Takaful, Family Health Takaful, Family Insurance, Freelancer Safety Net, Home Insurance Takaful, Small Business Protection, Tesla Car Insurance, Vancouver Renters Protection, Youth Sports Takaful</td>
+  <td>password123</td>
+  <td class="yes">Yes</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td>User Test2</td>
+  <td>testuser2@gettakaful.com</td>
+  <td>1234567892</td>
+  <td>Calgary Drivers Takaful, Community Auto Takaful, Family Insurance, Neighborhood Watch Fund, Small Business Protection, Tesla Car Insurance, Youth Sports Takaful</td>
+  <td>password123</td>
+  <td class="yes">Yes</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td>User Test3</td>
+  <td>testuser3@gettakaful.com</td>
+  <td>1234567893</td>
+  <td>Elderly Care Fund, Family Health Takaful, Family Insurance, Home Insurance Takaful, Montreal Health Pool, Neighborhood Watch Fund, Student Emergency Fund, Tesla Car Insurance, Travel Safety Takaful</td>
+  <td>password123</td>
+  <td class="yes">Yes</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td>User Test4</td>
+  <td>testuser4@gettakaful.com</td>
+  <td>1234567894</td>
+  <td>Elderly Care Fund, Family Health Takaful, Freelancer Safety Net, Home Insurance Takaful, Small Business Protection, Student Emergency Fund, Travel Safety Takaful, Youth Sports Takaful</td>
+  <td>password123</td>
+  <td class="no">No</td>
+</tr>
+<tr>
+  <td>7</td>
+  <td>User Test5</td>
+  <td>testuser5@gettakaful.com</td>
+  <td>1234567895</td>
+  <td>Community Auto Takaful, Elderly Care Fund, Family Health Takaful, Home Insurance Takaful, Travel Safety Takaful</td>
+  <td>password123</td>
+  <td class="no">No</td>
+</tr>
+<tr>
+  <td>8</td>
+  <td>Test Takaful</td>
+  <td>yixera4386@aiwanlab.com</td>
+  <td>—</td>
+  <td>Tesla Car Insurance</td>
+  <td>password123</td>
+  <td class="no">No</td>
+</tr>
+<tr>
+  <td>9</td>
+  <td>Rafiatun Zannat</td>
+  <td>mroni78@gmail.com</td>
+  <td>—</td>
+  <td>Tesla Car Insurance</td>
+  <td>password123</td>
+  <td class="no">No</td>
+</tr>
+<tr>
+  <td>10</td>
+  <td>Rishad Bin Wahid</td>
+  <td>info@sklentr.com</td>
+  <td>—</td>
+  <td>Tesla Car Insurance</td>
+  <td>password123</td>
+  <td class="no">No</td>
+</tr>
+<tr>
+  <td>11</td>
+  <td>GetTakaful Inc.</td>
+  <td>tanzilur@sklentr.com</td>
+  <td>—</td>
+  <td>Tesla Car Insurance</td>
+  <td>password123</td>
+  <td class="no">No</td>
+</tr>
+<tr>
+  <td>12</td>
+  <td>Sarah Ahmed</td>
+  <td>sarah.ahmed@gettakaful.com</td>
+  <td>4165551234</td>
+  <td>—</td>
+  <td>password123</td>
+  <td class="no">No</td>
+</tr>
+</tbody>
+</table>
+
+<p class="note"><b>Note:</b> All passwords have been reset to <b>password123</b>. Users who own groups: Tanzilur Rahman (10 groups), User Test1 (Vancouver Renters Protection, Family Insurance), User Test2 (Calgary Drivers Takaful), User Test3 (Montreal Health Pool).</p>
+
+</body>
+</html>

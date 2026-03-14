@@ -25,8 +25,14 @@ export default function LoginPage() {
       await login(email, password);
       showToast('Welcome back!');
     } catch (err: unknown) {
-      const apiError = err as { message?: string };
-      const msg = apiError.message || 'Invalid email or password.';
+      const apiError = err as { message?: string; errors?: Record<string, string[]> };
+      let msg = 'Invalid email or password.';
+      if (apiError.errors) {
+        const firstError = Object.values(apiError.errors)[0];
+        msg = firstError?.[0] || msg;
+      } else if (apiError.message) {
+        msg = apiError.message;
+      }
       setError(msg);
       showToast(msg, 'error');
     } finally {
@@ -86,7 +92,7 @@ export default function LoginPage() {
 
           <div className="auth-footer">
             Don&apos;t have an account?{' '}
-            <Link href="/verify-email" className="auth-link">
+            <Link href="/signup" className="auth-link">
               Signup &#x2197;
             </Link>
           </div>

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth-context';
 import { authApi } from '@/lib/api';
 import AuthSkeleton from '@/components/auth/AuthSkeleton';
@@ -15,16 +15,21 @@ const provinces = [
   'Nunavut', 'Ontario', 'Prince Edward Island', 'Quebec', 'Saskatchewan', 'Yukon',
 ];
 
+const experienceOptions = [
+  'No Experience',
+  'Not Satisfied with the one I use',
+  'I am looking for a new one',
+  'I am very satisfied',
+];
+
 export default function SignupPage() {
-  const searchParams = useSearchParams();
   const router = useRouter();
   const { login } = useAuth();
-  const verifiedEmail = searchParams.get('email') || '';
 
   const [form, setForm] = useState({
     first_name: '',
     last_name: '',
-    email: verifiedEmail,
+    email: '',
     password: '',
     address: '',
     city: '',
@@ -73,41 +78,43 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="auth-page">
+    <div className="auth-page signup-page">
       <div className="auth-logo">
         <img src="/img/logo.png" alt="GetTakaful" />
       </div>
 
       <div className="auth-card auth-card-wide">
-        <div className="auth-form-side" style={{ padding: '36px 40px' }}>
-          <div className="auth-heading">
-            <button className="auth-back-btn" onClick={() => router.back()} type="button">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <path d="M15 18l-6-6 6-6" />
-              </svg>
-            </button>
-            <h1>Let&apos;s create an account</h1>
+        <div className="auth-form-side signup-form-side">
+          <div className="signup-header-fixed">
+            <div className="auth-heading">
+              <button className="auth-back-btn" onClick={() => router.back()} type="button">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <path d="M15 18l-6-6 6-6" />
+                </svg>
+              </button>
+              <h1>Let&apos;s create an account</h1>
+            </div>
+
+            {error && <div className="login-error">{error}</div>}
           </div>
 
-          {error && <div className="login-error">{error}</div>}
-
-          <form onSubmit={handleSubmit} className="auth-form">
-            {/* Email - readonly if verified */}
+          <form onSubmit={handleSubmit} className="auth-form signup-form signup-form-scroll">
+            {/* Email */}
             <div className="form-group">
               <label>Email <span className="required">*</span></label>
               <input
                 type="email"
                 name="email"
-                className={`form-control ${verifiedEmail ? 'readonly-highlight' : ''}`}
+                className="form-control"
                 value={form.email}
                 onChange={handleChange}
-                readOnly={!!verifiedEmail}
+                placeholder="Enter your email"
                 required
               />
             </div>
 
             {/* First Name & Last Name */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+            <div className="signup-row">
               <div className="form-group">
                 <label>First Name <span className="required">*</span></label>
                 <input type="text" name="first_name" className="form-control" value={form.first_name} onChange={handleChange} placeholder="First Name" required />
@@ -131,7 +138,7 @@ export default function SignupPage() {
             </div>
 
             {/* City & Province */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+            <div className="signup-row">
               <div className="form-group">
                 <label>City <span className="required">*</span></label>
                 <input type="text" name="city" className="form-control" value={form.city} onChange={handleChange} placeholder="City" required />
@@ -147,27 +154,34 @@ export default function SignupPage() {
             </div>
 
             {/* Shariah Insurance Question */}
-            <div className="radio-group">
-              <p>Do you know any Islami Shariah-based insurance in your area? <span className="required">*</span></p>
-              <label className="radio-option">
-                <input type="radio" name="knows_shariah_insurance" value="Yes" checked={form.knows_shariah_insurance === 'Yes'} onChange={handleChange} required />
-                Yes
-              </label>
-              <label className="radio-option">
-                <input type="radio" name="knows_shariah_insurance" value="No" checked={form.knows_shariah_insurance === 'No'} onChange={handleChange} />
-                No
-              </label>
+            <div className="signup-radio-section">
+              <p className="signup-question">Do you know any Islami Shariah-based insurance in your area? <span className="required">*</span></p>
+              <div className="signup-radio-options">
+                <label className="signup-radio-label">
+                  <input type="radio" name="knows_shariah_insurance" value="Yes" checked={form.knows_shariah_insurance === 'Yes'} onChange={handleChange} required />
+                  <span className="signup-radio-custom"></span>
+                  Yes
+                </label>
+                <label className="signup-radio-label">
+                  <input type="radio" name="knows_shariah_insurance" value="No" checked={form.knows_shariah_insurance === 'No'} onChange={handleChange} />
+                  <span className="signup-radio-custom"></span>
+                  No
+                </label>
+              </div>
             </div>
 
             {/* Insurance Experience Question */}
-            <div className="radio-group">
-              <p>How is your experience in the current insurance industry? <span className="required">*</span></p>
-              {['No Experience', 'Not Satisfied with the one I use', 'I am looking for a new one', 'I am very satisfied'].map((opt) => (
-                <label className="radio-option" key={opt}>
-                  <input type="radio" name="insurance_experience" value={opt} checked={form.insurance_experience === opt} onChange={handleChange} required />
-                  {opt}
-                </label>
-              ))}
+            <div className="signup-radio-section">
+              <p className="signup-question">How is your experience in the current insurance industry? <span className="required">*</span></p>
+              <div className="signup-radio-options">
+                {experienceOptions.map((opt) => (
+                  <label className="signup-radio-label" key={opt}>
+                    <input type="radio" name="insurance_experience" value={opt} checked={form.insurance_experience === opt} onChange={handleChange} required />
+                    <span className="signup-radio-custom"></span>
+                    {opt}
+                  </label>
+                ))}
+              </div>
             </div>
 
             {/* Expectation */}
@@ -179,6 +193,7 @@ export default function SignupPage() {
                 value={form.expectation}
                 onChange={handleChange}
                 placeholder="Please write why you are looking for it, what improvement do you need from your current experience"
+                rows={4}
                 required
               />
             </div>
