@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Mail\GroupInvitation;
 use App\Models\Group;
 use App\Models\Invitation;
 use Illuminate\Http\Request;
@@ -79,14 +80,55 @@ class GroupController extends Controller
 
     public function join(Request $request, Group $group)
     {
+        $request->validate([
+            'street_address' => 'nullable|string|max:255',
+            'city' => 'nullable|string|max:255',
+            'province' => 'nullable|string|max:255',
+            'knows_shariah_insurance' => 'nullable|string|in:yes,no',
+            'insurance_experience' => 'nullable|string|max:255',
+            'expectation' => 'nullable|string',
+            'profile_picture' => 'nullable|string',
+            'profile_picture_url' => 'nullable|url',
+            'vehicle_make' => 'nullable|string|max:255',
+            'vehicle_model' => 'nullable|string|max:255',
+            'identification_number' => 'nullable|string|max:255',
+            'registration_number' => 'nullable|string|max:255',
+            'engine_size_capacity' => 'nullable|string|max:255',
+        ]);
+
         $user = $request->user();
 
         if ($group->isMember($user->id)) {
             return response()->json(['message' => 'Already a member'], 409);
         }
 
-        $group->members()->attach($user->id, ['role' => 'member']);
+        // Update user profile fields if provided
+        $profileFields = $request->only([
+            'street_address', 'city', 'province',
+            'knows_shariah_insurance', 'insurance_experience', 'expectation',
+        ]);
+        $profileFields = array_filter($profileFields, fn($v) => $v !== null && $v !== '');
+        if (!empty($profileFields)) {
+            $user->update($profileFields);
+        }
+
+        // Attach user to group with vehicle info
+        $pivotData = ['role' => 'member'];
+        $vehicleFields = ['vehicle_make', 'vehicle_model', 'identification_number', 'registration_number', 'engine_size_capacity'];
+        foreach ($vehicleFields as $field) {
+            if ($request->filled($field)) {
+                $pivotData[$field] = $request->input($field);
+            }
+        }
+
+        $group->members()->attach($user->id, $pivotData);
         $group->recalculate();
+
+        // Update invitation status if exists
+        Invitation::where('group_id', $group->id)
+            ->where('email', $user->email)
+            ->where('status', 'pending')
+            ->update(['status' => 'accepted']);
 
         return response()->json(['message' => 'Joined successfully']);
     }
@@ -100,21 +142,15 @@ class GroupController extends Controller
 
         $user = $request->user();
 
+        $joinUrl = config('app.frontend_url') . '/join/' . $group->group_token;
+
         foreach ($request->emails as $email) {
             Invitation::updateOrCreate(
                 ['group_id' => $group->id, 'email' => $email],
                 ['invited_by' => $user->id, 'status' => 'pending']
             );
 
-            $groupTitle = $group->title;
-            $joinUrl = config('app.frontend_url') . '/join/' . $group->group_token;
-
-            Mail::raw(
-                "You've been invited to join '{$groupTitle}' on GetTakaful.\n\nJoin here: {$joinUrl}",
-                function ($message) use ($email, $groupTitle) {
-                    $message->to($email)->subject("GetTakaful - Invitation to join {$groupTitle}");
-                }
-            );
+            Mail::to($email)->send(new GroupInvitation($group, $joinUrl));
         }
 
         return response()->json(['message' => 'Invitations sent']);

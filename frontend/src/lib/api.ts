@@ -98,14 +98,30 @@ export const groupsApi = {
   showByToken: (groupToken: string) =>
     apiFetch(`/groups/token/${groupToken}`),
 
-  join: (token: string, id: number) =>
-    apiFetch(`/groups/${id}/join`, { method: 'POST', token }),
+  join: (token: string, id: number, data?: Record<string, unknown>) =>
+    apiFetch(`/groups/${id}/join`, { method: 'POST', token, body: JSON.stringify(data || {}) }),
 
   invite: (token: string, id: number, emails: string[]) =>
     apiFetch(`/groups/${id}/invite`, { method: 'POST', token, body: JSON.stringify({ emails }) }),
 
   claims: (token: string, id: number) =>
     apiFetch(`/groups/${id}/claims`, { token }),
+};
+
+// Payments API
+export const paymentsApi = {
+  createCheckout: (token: string, groupId: number, formData?: Record<string, unknown>) =>
+    apiFetch<{ checkout_url: string; session_id: string }>(`/groups/${groupId}/checkout`, {
+      method: 'POST', token, body: JSON.stringify({ form_data: formData || {} }),
+    }),
+
+  verifySession: (token: string, groupId: number, sessionId: string) =>
+    apiFetch<{ message: string; group_id: number }>(`/groups/${groupId}/verify-session`, {
+      method: 'POST', token, body: JSON.stringify({ session_id: sessionId }),
+    }),
+
+  history: (token: string) =>
+    apiFetch('/payments/history', { token }),
 };
 
 // Claims API
@@ -115,6 +131,9 @@ export const claimsApi = {
 
   show: (token: string, id: number) =>
     apiFetch(`/claims/${id}`, { token }),
+
+  review: (token: string, id: number, data: { decision: string; reason?: string }) =>
+    apiFetch(`/claims/${id}/review`, { method: 'POST', token, body: JSON.stringify(data) }),
 
   vote: (token: string, id: number, data: { decision: string; comment?: string }) =>
     apiFetch(`/claims/${id}/vote`, { method: 'POST', token, body: JSON.stringify(data) }),

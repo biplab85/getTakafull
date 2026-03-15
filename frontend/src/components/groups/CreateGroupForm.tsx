@@ -38,13 +38,15 @@ export default function CreateGroupForm({ onSuccess }: CreateGroupFormProps) {
     setLoading(true);
     try {
       await groupsApi.create(token, {
-        ...form,
+        title: form.name,
+        description: form.description,
         amount_to_join: parseFloat(form.amount_to_join),
-        minimum_members: parseInt(form.minimum_members),
+        minimum_number_of_people: parseInt(form.minimum_members),
         management_fee: parseFloat(form.management_fee || '0'),
         claims_processing_fee: parseFloat(form.claims_processing_fee || '0'),
         shariah_compliance_review_fee: parseFloat(form.shariah_compliance_review_fee || '0'),
-        platform_fee: parseFloat(form.platform_fee || '0'),
+        gettakaful_platform_fee: parseFloat(form.platform_fee || '0'),
+        rules: form.rules,
       });
       showToast('Takaful group created successfully!');
       onSuccess();

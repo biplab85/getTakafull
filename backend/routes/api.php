@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ClaimController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\GroupController;
+use App\Http\Controllers\Api\PaymentController;
 use Illuminate\Support\Facades\Route;
 
 // Public auth routes
@@ -15,6 +16,9 @@ Route::post('/auth/forgot-password', [AuthController::class, 'forgotPassword']);
 
 // Public group lookup by token
 Route::get('/groups/token/{token}', [GroupController::class, 'showByToken']);
+
+// Stripe webhook (no auth, verified by signature)
+Route::post('/stripe/webhook', [PaymentController::class, 'webhook']);
 
 // Protected routes
 Route::middleware('auth:sanctum')->group(function () {
@@ -41,5 +45,11 @@ Route::middleware('auth:sanctum')->group(function () {
     // Claims
     Route::post('/claims', [ClaimController::class, 'store']);
     Route::get('/claims/{claim}', [ClaimController::class, 'show']);
+    Route::post('/claims/{claim}/review', [ClaimController::class, 'ownerReview']);
     Route::post('/claims/{claim}/vote', [ClaimController::class, 'vote']);
+
+    // Payments
+    Route::post('/groups/{group}/checkout', [PaymentController::class, 'createCheckout']);
+    Route::post('/groups/{group}/verify-session', [PaymentController::class, 'verifySession']);
+    Route::get('/payments/history', [PaymentController::class, 'history']);
 });

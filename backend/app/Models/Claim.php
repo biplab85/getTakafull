@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Claim extends Model
 {
@@ -32,6 +33,8 @@ class Claim extends Model
         'police_report_file',
         'digital_signature',
         'voting_deadline',
+        'review_token',
+        'owner_review_reason',
     ];
 
     protected $casts = [
@@ -40,6 +43,16 @@ class Claim extends Model
         'estimated_cost_of_repairs' => 'decimal:2',
         'voting_deadline' => 'datetime',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function ($claim) {
+            if (empty($claim->review_token)) {
+                $claim->review_token = Str::random(64);
+            }
+        });
+    }
 
     public function group()
     {
@@ -68,7 +81,7 @@ class Claim extends Model
 
     public function isVotingOpen(): bool
     {
-        return $this->status === 'pending'
+        return $this->status === 'owner_approved'
             && $this->voting_deadline
             && $this->voting_deadline->isFuture();
     }
@@ -76,5 +89,23 @@ class Claim extends Model
     public function hasUserVoted(int $userId): bool
     {
         return $this->votes()->where('user_id', $userId)->exists();
+    }
+
+    /**
+     * Check if 70% of group members (excluding claimant) approved.
+     */
+    public function checkVotingResult(): ?string
+    {
+        $totalMembers = $this->group->activeMembers()->count();
+        $eligibleVoters = $totalMembers - 1; // exclude claimant
+
+        if ($eligibleVoters <= 0) {
+            return null;
+        }
+
+        $approvedCount = $this->approvedVotes()->count();
+        $approvalPercentage = ($approvedCount / $eligibleVoters) * 100;
+
+        return $approvalPercentage >= 70 ? 'approved' : null;
     }
 }
