@@ -25,6 +25,7 @@ interface PendingVote {
 
 interface RecentClaim {
   id: number;
+  title: string;
   group_name: string;
   policy_number: string;
   status: string;
@@ -168,9 +169,8 @@ export default function DashboardPage() {
               <table>
                 <thead>
                   <tr>
-                    <th>Group</th>
-                    <th>Policy #</th>
-                    <th>Amount</th>
+                    <th>Claim Name</th>
+                    <th>Group Name</th>
                     <th>Status</th>
                     <th></th>
                   </tr>
@@ -178,12 +178,11 @@ export default function DashboardPage() {
                 <tbody>
                   {recentClaims.map((claim) => (
                     <tr key={claim.id}>
+                      <td>{claim.title || `Claim - ${claim.policy_number}`}</td>
                       <td>{claim.group_name}</td>
-                      <td>{claim.policy_number}</td>
-                      <td>{claim.amount_claimed} CAD</td>
                       <td>
-                        <span className={`status-content ${claim.status.toLowerCase().replace(/\s+/g, '-')}`}>
-                          {claim.status}
+                        <span className={`status-content ${claim.status.toLowerCase().replace(/[\s_]+/g, '-')}`}>
+                          {claim.status.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}
                         </span>
                       </td>
                       <td>
